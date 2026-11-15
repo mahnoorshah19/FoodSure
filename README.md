@@ -180,27 +180,28 @@ flowchart TD
 
 ### Prerequisites
 
-- Python **3.11**
+- Python **3.11+**
 - Node.js 20 or newer
-- [Git LFS](https://git-lfs.com), needed for the ResNet50 models (about 640 MB)
+- Trained `model.keras` weights (~214 MB per spice; excluded from GitHub due to the 100 MB file limit)
 
-### 1. Clone with the models
+### 1. Clone the repository & place model weights
 
 ```bash
-git clone https://github.com/ovaisbinamer/food_sure.git
-cd food_sure
-git lfs pull
+git clone [https://github.com/mahnoorshah19/FoodSure.git](https://github.com/mahnoorshah19/FoodSure.git)
+cd FoodSure
 ```
 
 ### 2. Backend
 
 ```bash
 cd backend
-py -3.11 -m pip install -r requirements.txt
-py -3.11 -m uvicorn main:app --host 0.0.0.0 --port 8000
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-Interactive API docs: <http://127.0.0.1:8000/docs>
+Interactive API docs: http://127.0.0.1:8000/docs
 
 > [!WARNING]
 > Keep `numpy` on 1.26.x. TensorFlow 2.17 breaks with numpy 2, and installing extra packages without the pins in `requirements.txt` can upgrade it silently.
@@ -277,7 +278,7 @@ Errors: `400` for a bad upload or an unknown spice, and `503` when model files a
 
 ```bash
 cd backend
-py -3.11 test_predict.py
+python test_predict.py
 ```
 
 This test pins the current answers on the six sample photos, so any change to preprocessing, resizing or voting that shifts a result makes it fail. It also checks that bad uploads are rejected with `400`. After retraining, check the new answers and update `EXPECTED` in the test.
