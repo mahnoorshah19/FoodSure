@@ -1,15 +1,14 @@
-import os
 import glob
-import json
-import joblib
+import os
+
 import cv2
-import numpy as np
+import joblib
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 from skimage.feature import local_binary_pattern
-from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, auc
+from sklearn.metrics import accuracy_score, auc, confusion_matrix, roc_curve
 from sklearn.preprocessing import label_binarize
-
 
 # PUBLICATION STYLING (300 DPI, Vector PDF + PNG)
 
