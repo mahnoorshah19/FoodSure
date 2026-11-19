@@ -22,12 +22,13 @@ won all three spices:
      preprocess_input for the winning model, or raw /255 rescale for the CNN.
 """
 
-import os
 import json
+import os
 import re
+
 import numpy as np
-from PIL import Image, ImageOps
 import tensorflow as tf
+from PIL import Image, ImageOps
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Point this at wherever you copied web_models/ locally after downloading
@@ -102,7 +103,7 @@ def _get_model(spice):
         raise ValueError(f"Unknown spice '{spice}'. Available: {list(manifest.keys())}")
 
     if spice not in _models:
-        entry = manifest[spice]
+        entry = manifest[spice]  # noqa: F841
         # Cell 13 always writes these two fixed filenames per spice folder —
         # the manifest itself doesn't carry a model_file/label_map_file key.
         model_path = os.path.join(WEB_MODELS_DIR, spice, "model.keras")
@@ -244,7 +245,7 @@ def predict_adulteration(image, spice: str) -> dict:
     try:
         import pipeline_utils
         pipeline_types = pipeline_utils.predict_types(pil_img, spice)
-    except Exception as e:  # a missing library or a bad bundle must not take the API down
+    except Exception as e:  # a missing library or a bad bundle must not take the API down  # noqa: BLE001
         print(f"[pipeline] skipped for {spice}: {type(e).__name__}: {e}")
     if pipeline_types is not None and set(pipeline_types) != set(resnet_types):
         print(f"[pipeline] class mismatch for {spice}: {sorted(pipeline_types)} vs {sorted(resnet_types)}")
